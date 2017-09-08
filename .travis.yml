@@ -3,5 +3,15 @@ language: go
 go:
   - 1.6.4
 
+env:
+  global:
+    - CODECOV_TOKEN: d5ab83bd-8529-451c-8d5e-4270feb99505
+
+before_install:
+  - go get -t -v ./...
+
 script:
-  - go test -v .
+  - go test -race -coverprofile=coverage.txt -covermode=atomic
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
